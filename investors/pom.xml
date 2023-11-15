@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ipl.vinci.be</groupId>
-	<artifactId>Investor</artifactId>
+	<artifactId>investors</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Investor</name>
-	<description>Investor</description>
+	<name>investors</name>
+	<description>investors</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.4</spring-cloud.version>

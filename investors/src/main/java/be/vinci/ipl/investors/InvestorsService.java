@@ -1,4 +1,4 @@
-package ipl.vinci.be.investors;
+package be.vinci.ipl.investors;
 
 import org.springframework.stereotype.Service;
 

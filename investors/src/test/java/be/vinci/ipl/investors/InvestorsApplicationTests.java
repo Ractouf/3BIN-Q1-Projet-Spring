@@ -1,4 +1,4 @@
-package ipl.vinci.be.investors;
+package be.vinci.ipl.investors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
