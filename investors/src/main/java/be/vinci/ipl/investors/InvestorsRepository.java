@@ -1,4 +1,4 @@
-package ipl.vinci.be.investors;
+package be.vinci.ipl.investors;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package ipl.vinci.be.investors;
+package be.vinci.ipl.investors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name = "investor")
+@Entity(name = "investors")
 public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
