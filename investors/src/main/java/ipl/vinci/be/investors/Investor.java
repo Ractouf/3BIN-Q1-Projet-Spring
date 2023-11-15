@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name = "Investor")
+@Entity(name = "investor")
 public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
