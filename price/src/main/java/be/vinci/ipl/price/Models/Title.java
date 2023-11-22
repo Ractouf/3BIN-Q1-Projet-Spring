@@ -18,14 +18,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Ticker")
-public class Ticker {
+public class Title {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonIgnore
   private int id;
-  @Column
+  @Column(nullable = false)
   private String ticker;
-  @Column
+  @Column(nullable = false)
   private double price;
 
 

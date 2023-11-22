@@ -1,0 +1,9 @@
+### Create review
+GET http://localhost:9003/price/324321545
+
+
+### Update review
+PATCH http://localhost:9003/price/324321545
+Content-Type: text/plain
+
+3.0

@@ -1,6 +1,6 @@
 package be.vinci.ipl.price;
 
-import be.vinci.ipl.price.Models.Ticker;
+import be.vinci.ipl.price.Models.Title;
 import be.vinci.ipl.price.repositories.TickerRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +14,25 @@ public class PriceService {
 
   public double getPrice(String ticker) {
     if (!repository.existsByTicker(ticker)) {
-      Ticker newTicker = new Ticker();
-      newTicker.setTicker(ticker);
-      newTicker.setPrice(1);
-
-      repository.save(newTicker);
+      return 1;
     }
-    return repository.getPriceByTicker(ticker);
+    Title tile = repository.getTitleByTicker(ticker);
+    return tile.getPrice();
   }
 
   public boolean changePrice(String ticker, double newPrice) {
     if(newPrice <= 0) return false;
 
-    Ticker updatedticker = repository.getTickerByTicker(ticker);
-
-    updatedticker.setPrice(newPrice);
-
-    //if(repository.existsByTicker(ticker))
-    repository.save(updatedticker);
+    if (!repository.existsByTicker(ticker)) {
+      Title newTitle = new Title();
+      newTitle.setTicker(ticker);
+      newTitle.setPrice(newPrice);
+      repository.save(newTitle);
+    }else {
+      Title updatedTitle = repository.getTitleByTicker(ticker);
+      updatedTitle.setPrice(newPrice);
+      repository.save(updatedTitle);
+    }
     return true;
 
   }
