@@ -21,10 +21,13 @@ public class InvestorsService {
         return repository.findByUsername(username).orElse(null);
     }
 
-    public boolean updateOne(Investor investor) {
-        if (!repository.existsByUsername(investor.getUsername())) return false;
+    public boolean updateOne(Investor newInvestor) {
+        Investor oldInvestor = repository.findByUsername(newInvestor.getUsername()).orElse(null);
+        if (oldInvestor == null) return false;
 
-        repository.save(investor);
+        newInvestor.setId(oldInvestor.getId());
+
+        repository.save(newInvestor);
         return true;
     }
 

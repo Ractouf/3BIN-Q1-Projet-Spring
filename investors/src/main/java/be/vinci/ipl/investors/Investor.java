@@ -20,7 +20,13 @@ public class Investor {
     @JsonIgnore
     private int id;
     @Column(nullable = false)
-    private String username, firstname, lastname, password;
+    private String username;
+    @Column(nullable = false)
+    private String firstname;
+    @Column(nullable = false)
+    private String lastname;
+    @Column(nullable = false)
+    private String password;
     @Column(nullable = false)
     private Date birthdate;
 
