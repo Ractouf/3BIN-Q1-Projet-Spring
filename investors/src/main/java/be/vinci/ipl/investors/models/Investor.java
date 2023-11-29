@@ -1,4 +1,4 @@
-package be.vinci.ipl.investors;
+package be.vinci.ipl.investors.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

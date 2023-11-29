@@ -1,5 +1,6 @@
 package be.vinci.ipl.investors;
 
+import be.vinci.ipl.investors.models.Investor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
