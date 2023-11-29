@@ -14,7 +14,7 @@ public class InverstorsController {
 
     @PostMapping("/investors/{username}")
     public ResponseEntity<Void> createOne(@PathVariable String username, @RequestBody Investor investor) {
-        if (investor.getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!investor.getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         if (investor.invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         boolean created = service.createOne(investor);
@@ -33,7 +33,7 @@ public class InverstorsController {
 
     @PutMapping("/investors/{username}")
     public ResponseEntity<Investor> putOne(@PathVariable String username, @RequestBody Investor investor) {
-        if (investor.getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!investor.getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         if (investor.invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         boolean updated = service.updateOne(investor);
@@ -43,7 +43,7 @@ public class InverstorsController {
     }
 
     @DeleteMapping("/investors/{username}")
-    public ResponseEntity<Investor> putOne(@PathVariable String username) {
+    public ResponseEntity<Investor> deleteOne(@PathVariable String username) {
         boolean deleted = service.deleteOne(username);
 
         if (!deleted) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
