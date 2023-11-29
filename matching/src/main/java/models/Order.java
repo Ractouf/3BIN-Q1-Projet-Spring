@@ -15,6 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
+  private String guid;
   private String owner;
   private int timestamp;
   private String ticker;
