@@ -1,4 +1,4 @@
-package be.vinci.ipl.investors;
+package be.vinci.ipl.investors.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -26,7 +26,7 @@ public class Investor {
     @Column(nullable = false)
     private String lastname;
     @Column(nullable = false)
-    private String password;
+    private String email;
     @Column(nullable = false)
     private Date birthdate;
 
@@ -34,6 +34,7 @@ public class Investor {
         return username == null || username.isBlank() ||
                 firstname == null || firstname.isBlank() ||
                 lastname == null || lastname.isBlank() ||
+                email == null || email.isBlank() ||
                 birthdate == null;
     }
 }

@@ -1,5 +1,6 @@
 package be.vinci.ipl.investors;
 
+import be.vinci.ipl.investors.models.Investor;
 import org.springframework.stereotype.Service;
 
 @Service
