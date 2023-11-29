@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExecutionsService {
-    private final ExecutionsRepository repository;
     private final PriceProxy priceProxy;
 
-    public ExecutionsService(ExecutionsRepository repository, PriceProxy priceProxy) {
-        this.repository = repository;
+    public ExecutionsService(PriceProxy priceProxy) {
         this.priceProxy = priceProxy;
     }
 
