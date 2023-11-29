@@ -1,5 +1,7 @@
 package be.vinci.ipl.matching;
 
+import data.TransactionProxy;
+import models.Transaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MatchingController {
 
     MatchingService service;
+    TransactionProxy transactionProxy;
 
-    public MatchingController(MatchingService service) {
+    public MatchingController(MatchingService service , TransactionProxy transactionProxy) {
         this.service = service;
+        this.transactionProxy = transactionProxy;
     }
 
     @PostMapping("/trigger/{ticker}")
     public ResponseEntity<Void> findMatch(@PathVariable String ticker){
-
+        Transaction transaction = service.match(ticker);
+        transactionProxy.postOne(transaction.getTicker(), transaction.getSeller(), transaction.getBuyer(), transaction);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
