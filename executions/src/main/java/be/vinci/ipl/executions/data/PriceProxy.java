@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
-@FeignClient(name = "Ticker")
+@FeignClient(name = "price")
 public interface PriceProxy {
     @PatchMapping("/price/{ticker}")
     void changePrice(@PathVariable String ticker, @RequestBody String p);
