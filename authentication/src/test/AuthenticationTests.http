@@ -3,7 +3,7 @@ POST http://localhost:9002/authentication/Cat4Life
 Content-Type: application/json
 
 {
-  "pseudo": "Cat4Life",
+  "username": "Cat4Life",
   "password": "NotSaying!1234"
 }
 
@@ -12,7 +12,7 @@ PUT http://localhost:9002/authentication/Cat4Life
 Content-Type: application/json
 
 {
-  "pseudo": "Cat4Life",
+  "username": "Cat4Life",
   "password": "azerty"
 }
 
@@ -24,7 +24,7 @@ POST http://localhost:9002/authentication/connect
 Content-Type: application/json
 
 {
-  "pseudo": "Cat4Life",
+  "username": "Cat4Life",
   "password": "azerty"
 }
 
