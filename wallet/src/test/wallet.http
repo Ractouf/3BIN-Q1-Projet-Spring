@@ -1,0 +1,34 @@
+### adds positions to wallet of new user
+POST {{wallets}}/wallet/unAutreMot
+Content-Type: application/json
+
+[
+  {
+    "ticker": "LNRD",
+    "quantity": 2,
+    "unitvalue": 23
+  },
+  {
+    "ticker": "MAXI",
+    "quantity": 1,
+    "unitvalue": 10
+  }
+]
+
+### adds to existing positions in existing wallet
+POST {{wallets}}/wallet/unAutreMot
+Content-Type: application/json
+
+[
+  {
+    "ticker": "MAXI",
+    "quantity": 1,
+    "unitvalue": 10
+  }
+]
+
+### gets the networth of a user should be equal to 66
+GET {{wallets}}/wallet/unAutreMot/net-worth
+
+### gets content of wallet
+GET {{wallets}}/wallet/unAutreMot
