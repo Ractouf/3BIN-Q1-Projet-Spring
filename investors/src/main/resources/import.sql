@@ -1,1 +1,0 @@
-INSERT INTO investors(username, firstname, lastname, password, birthdate) VALUES ('DamienGunz', 'Damien', 'Lapinski', 'DamienBangBang', '2023-01-01');

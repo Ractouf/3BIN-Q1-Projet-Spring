@@ -1,5 +1,7 @@
 package be.vinci.ipl.investors;
 
+import be.vinci.ipl.investors.models.Investor;
+import be.vinci.ipl.investors.models.InvestorWithPassword;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +15,11 @@ public class InverstorsController {
     }
 
     @PostMapping("/investors/{username}")
-    public ResponseEntity<Void> createOne(@PathVariable String username, @RequestBody Investor investor) {
-        if (!investor.getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if (investor.invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Void> createOne(@PathVariable String username, @RequestBody InvestorWithPassword investor) {
+        if (!investor.getInvestorData().getUsername().equals(username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (investor.getInvestorData().invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        boolean created = service.createOne(investor);
+        boolean created = service.createOne(investor.getInvestorData());
 
         if (!created) return new ResponseEntity<>(HttpStatus.CONFLICT);
         return new ResponseEntity<>(HttpStatus.CREATED);
