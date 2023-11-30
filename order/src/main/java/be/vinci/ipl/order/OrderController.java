@@ -16,9 +16,12 @@ public class OrderController {
 
   @PostMapping("/order")
   public ResponseEntity<Order> createOne(@RequestBody Order order) {
-    if (order.isInvalid())
+    if (order.invalid())
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     service.createOne(order);
+
+    //TODO faire appel au matching
+
     return new ResponseEntity<>(order, HttpStatus.OK);
   }
 
@@ -31,8 +34,9 @@ public class OrderController {
   }
 
   @PatchMapping("/order/{guid}")
-  public ResponseEntity<Void> changeFilled(@PathVariable String guid, @RequestBody int filled) {
-    if (!service.changeFilled(guid, filled))
+  public ResponseEntity<Void> changeFilled(@PathVariable String guid, @RequestBody String filled) {
+    Order order = service.changeFilled(guid, Integer.parseInt(filled));
+    if (order == null)
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     return new ResponseEntity<>(HttpStatus.OK);
   }

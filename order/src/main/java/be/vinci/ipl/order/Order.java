@@ -1,6 +1,5 @@
 package be.vinci.ipl.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import enums.OrderSide;
 import enums.OrderType;
 import jakarta.persistence.*;
@@ -13,11 +12,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name = "order")
+@Entity(name = "orders")
 public class Order {
 
   @Id
-  @GeneratedValue(generator = "uuid")
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(nullable = false)
   private String guid;
   @Column(nullable = false)
   private String owner;
@@ -33,11 +33,12 @@ public class Order {
   @Enumerated
   @Column(nullable = false)
   private OrderType type;
+  @Column(name = "_limit")
   private double limit;
   private int filled = 0;
 
-  public boolean isInvalid() {
-    if (type == OrderType.Limit && limit <= 0)
+  public boolean invalid() {
+    if (type == OrderType.LIMIT && limit <= 0)
       return false;
     return owner == null || owner.isBlank() || timestamp < 0 || ticker == null || ticker.isBlank() ||
             quantity <= 0 || side == null || type == null;

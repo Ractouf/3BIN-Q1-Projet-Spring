@@ -22,16 +22,17 @@ public class OrderService {
     return repository.findById(guid).orElse(null);
   }
 
-  public boolean changeFilled(String guid, int filled) {
+  public Order changeFilled(String guid, int filled) {
     Order order = repository.findById(guid).orElse(null);
     if(order != null){
       int currentFilled = order.getFilled();
       if (order.getQuantity() >= (currentFilled+filled)) {
         order.setFilled(order.getFilled() + filled);
-        return true;
+        repository.save(order);
+        return order;
       }
     }
-    return false;
+    return order;
   }
 
   public Iterable<Order> readOwner(String username) {
@@ -48,7 +49,4 @@ public class OrderService {
     }
     return results;
   }
-
-
-
 }
