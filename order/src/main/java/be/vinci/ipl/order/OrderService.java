@@ -19,6 +19,14 @@ public class OrderService {
     return true;
   }
 
+  public boolean changeFilled(String id, int filled) {
+    Order order = repository.findById(id).orElse(null);
+    if(order == null)
+      return false;
+    order.
+    return true;
+  }
+
   public Order readOne(String id) {
     return repository.findById(id).orElse(null);
   }
