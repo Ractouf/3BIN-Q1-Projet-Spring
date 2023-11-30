@@ -1,0 +1,19 @@
+### find matches of a ticker
+POST http://localhost:9006/trigger/AAPL
+
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
+
+{
+  "owner": "Damien",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 100,
+  "side": "BUY",
+  "type": "LIMIT",
+  "limit": 10
+}
+
+### Get one order
+GET http://localhost:9004/order/fc038acb-c212-45c4-83bf-0dd9369aa460
