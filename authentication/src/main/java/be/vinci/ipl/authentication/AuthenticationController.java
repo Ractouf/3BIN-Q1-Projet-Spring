@@ -30,16 +30,16 @@ public class AuthenticationController {
 
     @PostMapping("/authentication/verify")
     public ResponseEntity<String> verify(@RequestBody String token) {
-        String pseudo = service.verify(token);
+        String username = service.verify(token);
 
-        if (pseudo == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return new ResponseEntity<>(pseudo, HttpStatus.OK);
+        if (username == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(username, HttpStatus.OK);
     }
 
 
-    @PostMapping("/authentication/{pseudo}")
-    public ResponseEntity<Void> createOne(@PathVariable String pseudo, @RequestBody UnsafeCredentials credentials) {
-        if (!Objects.equals(credentials.getPseudo(), pseudo)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping("/authentication/{username}")
+    public ResponseEntity<Void> createOne(@PathVariable String username, @RequestBody UnsafeCredentials credentials) {
+        if (!Objects.equals(credentials.getUsername(), username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         if (credentials.invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         boolean created = service.createOne(credentials);
@@ -48,9 +48,9 @@ public class AuthenticationController {
         else return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/authentication/{pseudo}")
-    public ResponseEntity<Void> updateOne(@PathVariable String pseudo, @RequestBody UnsafeCredentials credentials) {
-        if (!Objects.equals(credentials.getPseudo(), pseudo)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PutMapping("/authentication/{username}")
+    public ResponseEntity<Void> updateOne(@PathVariable String username, @RequestBody UnsafeCredentials credentials) {
+        if (!Objects.equals(credentials.getUsername(), username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         if (credentials.invalid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         boolean found = service.updateOne(credentials);
@@ -59,9 +59,9 @@ public class AuthenticationController {
         else return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/authentication/{pseudo}")
-    public ResponseEntity<Void> deleteCredentials(@PathVariable String pseudo) {
-        boolean found = service.deleteOne(pseudo);
+    @DeleteMapping("/authentication/{username}")
+    public ResponseEntity<Void> deleteCredentials(@PathVariable String username) {
+        boolean found = service.deleteOne(username);
 
         if (!found) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else return new ResponseEntity<>(HttpStatus.OK);

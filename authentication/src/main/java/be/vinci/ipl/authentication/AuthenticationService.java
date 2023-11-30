@@ -30,23 +30,23 @@ public class AuthenticationService {
      * @return The JWT token, or null if the user couldn't be connected
      */
     public String connect(UnsafeCredentials unsafeCredentials) {
-        SafeCredentials safeCredentials = repository.findById(unsafeCredentials.getPseudo()).orElse(null);
+        SafeCredentials safeCredentials = repository.findById(unsafeCredentials.getUsername()).orElse(null);
         if (safeCredentials == null) return null;
         if (!BCrypt.checkpw(unsafeCredentials.getPassword(), safeCredentials.getHashedPassword())) return null;
-        return JWT.create().withIssuer("auth0").withClaim("pseudo", safeCredentials.getPseudo()).sign(jwtAlgorithm);
+        return JWT.create().withIssuer("auth0").withClaim("username", safeCredentials.getUsername()).sign(jwtAlgorithm);
     }
 
 
     /**
      * Verifies JWT token
      * @param token The JWT token
-     * @return The pseudo of the user, or null if the token couldn't be verified
+     * @return The username of the user, or null if the token couldn't be verified
      */
     public String verify(String token) {
         try {
-            String pseudo = jwtVerifier.verify(token).getClaim("pseudo").asString();
-            if (!repository.existsById(pseudo)) return null;
-            return pseudo;
+            String username = jwtVerifier.verify(token).getClaim("username").asString();
+            if (!repository.existsById(username)) return null;
+            return username;
         } catch (JWTVerificationException e) {
             return null;
         }
@@ -59,7 +59,7 @@ public class AuthenticationService {
      * @return True if the credentials were created, or false if they already exist
      */
     public boolean createOne(UnsafeCredentials unsafeCredentials) {
-        if (repository.existsById(unsafeCredentials.getPseudo())) return false;
+        if (repository.existsById(unsafeCredentials.getUsername())) return false;
         String hashedPassword = BCrypt.hashpw(unsafeCredentials.getPassword(), BCrypt.gensalt());
         repository.save(unsafeCredentials.makeSafe(hashedPassword));
         return true;
@@ -71,7 +71,7 @@ public class AuthenticationService {
      * @return True if the credentials were updated, or false if they couldn't be found
      */
     public boolean updateOne(UnsafeCredentials unsafeCredentials) {
-        if (!repository.existsById(unsafeCredentials.getPseudo())) return false;
+        if (!repository.existsById(unsafeCredentials.getUsername())) return false;
         String hashedPassword = BCrypt.hashpw(unsafeCredentials.getPassword(), BCrypt.gensalt());
         repository.save(unsafeCredentials.makeSafe(hashedPassword));
         return true;
@@ -79,12 +79,12 @@ public class AuthenticationService {
 
     /**
      * Deletes credentials in repository
-     * @param pseudo The pseudo of the user
+     * @param username The username of the user
      * @return True if the credentials were deleted, or false if they couldn't be found
      */
-    public boolean deleteOne(String pseudo) {
-        if (!repository.existsById(pseudo)) return false;
-        repository.deleteById(pseudo);
+    public boolean deleteOne(String username) {
+        if (!repository.existsById(username)) return false;
+        repository.deleteById(username);
         return true;
     }
 

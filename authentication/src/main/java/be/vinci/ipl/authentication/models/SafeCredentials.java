@@ -14,7 +14,7 @@ import lombok.*;
 public class SafeCredentials {
     @Id
     @Column(nullable = false)
-    private String pseudo;
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String hashedPassword;
