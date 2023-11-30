@@ -1,6 +1,9 @@
 package be.vinci.ipl.order;
 
+import enums.OrderSide;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class OrderService {
@@ -11,25 +14,41 @@ public class OrderService {
     this.repository = repository;
   }
 
-  public boolean createOne(Order order) {
-    if (repository.existsById(String.valueOf(order.getId()))) return false;
-
+  public void createOne(Order order) {
     repository.save(order);
-
-    return true;
   }
 
-  public boolean changeFilled(String id, int filled) {
-    Order order = repository.findById(id).orElse(null);
-    if(order == null)
-      return false;
-    order.
-    return true;
+  public Order readOne(String guid) {
+    return repository.findById(guid).orElse(null);
   }
 
-  public Order readOne(String id) {
-    return repository.findById(id).orElse(null);
+  public boolean changeFilled(String guid, int filled) {
+    Order order = repository.findById(guid).orElse(null);
+    if(order != null){
+      int currentFilled = order.getFilled();
+      if (order.getQuantity() >= (currentFilled+filled)) {
+        order.setFilled(order.getFilled() + filled);
+        return true;
+      }
+    }
+    return false;
   }
+
+  public Iterable<Order> readOwner(String username) {
+    return repository.findByOwner(username).orElse(null);
+  }
+
+  public Iterable<Order> readTicker(String ticker, OrderSide side){
+    Iterable<Order> orders = repository.findByTickerAndSide(ticker, side);
+    ArrayList<Order> results = new ArrayList<>();
+    for (Order order : orders) {
+      if (order.getQuantity() > order.getFilled()){
+        results.add(order);
+      }
+    }
+    return results;
+  }
+
 
 
 }
