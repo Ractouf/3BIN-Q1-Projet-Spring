@@ -16,7 +16,7 @@ public class OrderController {
 
   @PostMapping("/order")
   public ResponseEntity<Order> createOne(@RequestBody Order order) {
-    if (order.invalid())
+    if (order.invalid() || order.getGuid() != null)
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     service.createOne(order);
 
