@@ -1,0 +1,29 @@
+### Post one investor
+POST {{investors}}/investors/test
+Content-Type: application/json
+
+{
+  "username": "test",
+  "firstname": "toast",
+  "lastname": "toast",
+  "password": "azerty1.",
+  "birthdate": "2023-01-01"
+}
+
+### Get one investor
+GET {{investors}}/investors/test
+
+### Update one investor
+PUT {{investors}}/investors/test
+Content-Type: application/json
+
+{
+  "username": "test",
+  "firstname": "toasté",
+  "lastname": "toast",
+  "password": "azerty1.",
+  "birthdate": "2023-01-01"
+}
+
+### Delete one investor
+DELETE {{investors}}/investors/test
