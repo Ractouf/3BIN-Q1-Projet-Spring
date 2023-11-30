@@ -7,6 +7,7 @@ import be.vinci.ipl.gateway.exceptions.NotFoundException;
 import be.vinci.ipl.gateway.exceptions.UnauthorizedException;
 import be.vinci.ipl.gateway.models.Investor;
 import be.vinci.ipl.gateway.models.InvestorWithPassword;
+import be.vinci.ipl.gateway.models.Order;
 import jakarta.ws.rs.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +85,27 @@ public class GatewayController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<Order> createOne(@RequestBody Order order) {
+        try {
+            service.createOne(order);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/order/by-user/{username}")
+    public ResponseEntity<Iterable<Order>> readOwner(@PathVariable String username) {
+        try {
+            return new ResponseEntity<>(service.readOwner(username),HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }

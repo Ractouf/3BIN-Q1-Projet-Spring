@@ -11,6 +11,7 @@ import be.vinci.ipl.gateway.exceptions.NotFoundException;
 import be.vinci.ipl.gateway.exceptions.UnauthorizedException;
 import be.vinci.ipl.gateway.models.Investor;
 import be.vinci.ipl.gateway.models.InvestorWithPassword;
+import be.vinci.ipl.gateway.models.Order;
 import feign.FeignException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,6 +110,25 @@ public class GatewayService {
         } catch (FeignException e) {
             if (e.status() == 404) throw new NotFoundException();
             else if (e.status() == 400) throw new BadRequestException();
+            else throw e;
+        }
+    }
+
+    public Order createOne(@RequestBody Order order) throws BadRequestException {
+        try {
+            return ordersProxy.createOne(order);
+        } catch (FeignException e) {
+            if (e.status() == 400) throw new BadRequestException();
+            else throw e;
+        }
+    }
+
+    public Iterable<Order> readOwner(@PathVariable String username) throws NotFoundException, UnauthorizedException {
+        try {
+            return ordersProxy.readOwner(username);
+        } catch (FeignException e) {
+            if (e.status() == 404) throw new NotFoundException();
+            else if (e.status() == 401) throw new UnauthorizedException();
             else throw e;
         }
     }
