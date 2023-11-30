@@ -1,0 +1,28 @@
+### Create one order
+POST {{orders}}/order
+Content-Type: application/json
+
+{
+  "owner": "Damien",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 100,
+  "side": "BUY",
+  "type": "LIMIT",
+  "limit": 10
+}
+
+### Get one order
+GET {{orders}}/order/2e94fda6-7afa-4f21-980d-b9349a800fec
+
+### Patch one order
+PATCH {{orders}}/order/2e94fda6-7afa-4f21-980d-b9349a800fec
+Content-Type: text/plain
+
+100
+
+### Get all orders by username
+GET {{orders}}/order/by-user/Damien
+
+### Get all orders by ticker and side
+GET {{orders}}/order/open/by-ticker/AAPL/BUY
