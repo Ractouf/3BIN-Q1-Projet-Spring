@@ -19,4 +19,7 @@ public interface InvestorsProxy {
 
     @DeleteMapping("/investors/{username}")
     Investor deleteOne(@PathVariable String username);
+
+    @PutMapping("/investors/{username}")
+    Investor putOne(@PathVariable String username, @RequestBody Investor investor);
 }

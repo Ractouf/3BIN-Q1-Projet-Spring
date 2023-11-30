@@ -1,5 +1,6 @@
 package be.vinci.ipl.gateway;
 
+import be.vinci.ipl.authentication.models.UnsafeCredentials;
 import be.vinci.ipl.gateway.data.AuthenticationProxy;
 import be.vinci.ipl.gateway.data.InvestorsProxy;
 import be.vinci.ipl.gateway.data.OrdersProxy;
@@ -7,9 +8,12 @@ import be.vinci.ipl.gateway.data.WalletsProxy;
 import be.vinci.ipl.gateway.exceptions.BadRequestException;
 import be.vinci.ipl.gateway.exceptions.ConflictException;
 import be.vinci.ipl.gateway.exceptions.NotFoundException;
+import be.vinci.ipl.gateway.exceptions.UnauthorizedException;
 import be.vinci.ipl.gateway.models.Investor;
 import be.vinci.ipl.gateway.models.InvestorWithPassword;
 import feign.FeignException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 public class GatewayService {
 
@@ -57,6 +61,55 @@ public class GatewayService {
             else if (e.status() == 409) throw new ConflictException();
             else throw e;
         }
-        //ToDo create wallet
+    }
+
+    public Investor putOne(@PathVariable String username, @RequestBody Investor investor) throws BadRequestException, NotFoundException {
+        try {
+            return investorsProxy.putOne(username, investor);
+        } catch (FeignException e) {
+            if (e.status() == 400) throw new BadRequestException();
+            else if (e.status() == 404) throw new NotFoundException();
+            else throw e;
+        }
+    }
+
+    public Investor deleteOne(@PathVariable String username) throws BadRequestException, NotFoundException {
+        Investor investor;
+        try {
+            investor = investorsProxy.deleteOne(username);
+        } catch (FeignException e) {
+            if (e.status() == 404) throw new NotFoundException();
+            else if (e.status() == 400) throw new BadRequestException();
+            else throw e;
+        }
+
+        try {
+            authenticationProxy.deleteCredentials(username);
+        } catch (FeignException e) {
+            if (e.status() == 404) throw new NotFoundException();
+            else throw e;
+        }
+
+        return investor;
+    }
+
+    public String connect(@RequestBody UnsafeCredentials credentials) throws BadRequestException, UnauthorizedException {
+        try {
+            return authenticationProxy.connect(credentials);
+        } catch (FeignException e) {
+            if (e.status() == 400) throw new BadRequestException();
+            else if (e.status() == 401) throw new UnauthorizedException();
+            else throw e;
+        }
+    }
+
+    public void updateOne(@PathVariable String username, @RequestBody UnsafeCredentials credentials) throws NotFoundException, BadRequestException {
+        try {
+            authenticationProxy.updateOne(username, credentials);
+        } catch (FeignException e) {
+            if (e.status() == 404) throw new NotFoundException();
+            else if (e.status() == 400) throw new BadRequestException();
+            else throw e;
+        }
     }
 }
