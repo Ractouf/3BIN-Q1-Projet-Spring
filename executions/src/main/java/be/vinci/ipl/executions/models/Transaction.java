@@ -23,10 +23,10 @@ public class Transaction {
     private String seller;
     @Column(nullable = false)
     private String buyer;
-    @Column(nullable = false)
-    private String buy_order_guid;
-    @Column(nullable = false)
-    private String sell_order_guid;
+    @Column(name = "buy_order_guid", nullable = false)
+    private String buyOrderGuid;
+    @Column(name = "sell_order_guid", nullable = false)
+    private String sellOrderGuid;
     @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
@@ -37,8 +37,8 @@ public class Transaction {
                 seller == null || seller.isBlank() ||
                 buyer == null || buyer.isBlank() ||
                 buyer == null || buyer.isBlank() ||
-                buy_order_guid == null || buy_order_guid.isBlank() ||
-                sell_order_guid == null || sell_order_guid.isBlank() ||
+                buyOrderGuid == null || buyOrderGuid.isBlank() ||
+                sellOrderGuid == null || sellOrderGuid.isBlank() ||
                 quantity <= 0 || price <= 0;
     }
 }
