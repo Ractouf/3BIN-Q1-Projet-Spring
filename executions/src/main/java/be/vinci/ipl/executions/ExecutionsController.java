@@ -24,7 +24,7 @@ public class ExecutionsController {
 
         //TODO
         // mettre a jour cash dans le wallet de buyer et seller
-        // mettre a jour les deux ordres
+        service.updateOrders(transaction);
         service.updatePrice(ticker, String.valueOf(transaction.getPrice()));
 
         return new ResponseEntity<>(HttpStatus.OK);
