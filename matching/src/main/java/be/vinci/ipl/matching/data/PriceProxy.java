@@ -1,4 +1,4 @@
-package data;
+package be.vinci.ipl.matching.data;
 
 
 import org.springframework.cloud.openfeign.FeignClient;

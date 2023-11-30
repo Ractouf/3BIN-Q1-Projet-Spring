@@ -1,24 +1,30 @@
 package be.vinci.ipl.matching;
 
-import data.OrderProxy;
-import data.PriceProxy;
-import enums.OrderSide;
+import be.vinci.ipl.matching.data.OrderProxy;
+import be.vinci.ipl.matching.data.PriceProxy;
+import be.vinci.ipl.matching.enums.OrderSide;
 
+import com.netflix.discovery.converters.Auto;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import models.Order;
-import enums.OrderType;
-import models.Transaction;
+import java.util.Set;
+import be.vinci.ipl.matching.models.Order;
+import be.vinci.ipl.matching.enums.OrderType;
+import be.vinci.ipl.matching.models.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static java.lang.Math.abs;
 
 @Service
 public class MatchingService {
 
+
   private final OrderProxy orderProxy;
+
   private final PriceProxy priceProxy;
 
-  public MatchingService(OrderProxy orderProxy, PriceProxy priceProxy){
+  public MatchingService(PriceProxy priceProxy, OrderProxy orderProxy ){
     this.orderProxy = orderProxy;
     this.priceProxy = priceProxy;
   }
@@ -34,8 +40,12 @@ public class MatchingService {
   }
 
   public List<Transaction> match(String ticker){
-    List<Order> sellOrders = orderProxy.getByTicker(ticker, OrderSide.SELL);
-    List<Order> buyOrders = orderProxy.getByTicker(ticker, OrderSide.BUY);
+    Iterable<Order> iterableSellOrders = orderProxy.readTicker(ticker, OrderSide.SELL);
+    Iterable<Order> iterableBuyOrders = orderProxy.readTicker(ticker, OrderSide.BUY);
+    Set<Order> sellOrders = new HashSet<>();
+    iterableSellOrders.forEach(sellOrders::add);
+    Set<Order> buyOrders = new HashSet<>();
+    iterableBuyOrders.forEach(buyOrders::add);
     List<Transaction> transactions = new ArrayList<>();
     Transaction transaction = null;
     double marketPrice = priceProxy.getPriceFromTicker(ticker);

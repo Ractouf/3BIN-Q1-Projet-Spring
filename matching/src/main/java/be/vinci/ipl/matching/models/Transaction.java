@@ -1,4 +1,4 @@
-package models;
+package be.vinci.ipl.matching.models;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;

@@ -1,9 +1,9 @@
-package models;
+package be.vinci.ipl.matching.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import enums.OrderSide;
-import enums.OrderType;
+import be.vinci.ipl.matching.enums.OrderSide;
+import be.vinci.ipl.matching.enums.OrderType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
