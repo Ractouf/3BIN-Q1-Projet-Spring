@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("order")
 public interface OrderProxy {
   @PatchMapping("/order/{guid}")
-  ResponseEntity<Void> changeFilled(@PathVariable String guid, @RequestBody String filled);
+  void changeFilled(@PathVariable String guid, @RequestBody String filled);
 }
