@@ -1,5 +1,6 @@
 package be.vinci.ipl.order;
 
+import be.vinci.ipl.order.data.MatchingProxy;
 import enums.OrderSide;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 public class OrderService {
 
   private final OrderRepository repository;
+  private final MatchingProxy matchingProxy;
 
-  public OrderService(OrderRepository repository){
+  public OrderService(OrderRepository repository, MatchingProxy matchingProxy){
     this.repository = repository;
+    this.matchingProxy = matchingProxy;
   }
 
   /**
@@ -20,6 +23,7 @@ public class OrderService {
    */
   public void createOne(Order order) {
     repository.save(order);
+    matchingProxy.findMatch(order.getTicker());
   }
 
   /**
