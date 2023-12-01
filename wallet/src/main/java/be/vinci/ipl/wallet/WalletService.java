@@ -23,6 +23,7 @@ public class WalletService {
     public double netWorth(String owner) throws NotFoundException {
         if (!repository.existsByUsername(owner))
             throw new NotFoundException();
+
         double result = 0;
         Iterable<PositionUser> positions = repository.findAllByUsername(owner);
 
@@ -41,8 +42,10 @@ public class WalletService {
     public Iterable<PositionUser> positions(String owner) throws NotFoundException {
         if (!repository.existsByUsername(owner))
             throw new NotFoundException();
+
         ArrayList<PositionUser> result = new ArrayList<>();
         Iterable<PositionUser> positions = repository.findAllByUsername(owner);
+
         for (PositionUser p : positions) {
             if(p.getQuantity() > 0)
                 result.add(p);
