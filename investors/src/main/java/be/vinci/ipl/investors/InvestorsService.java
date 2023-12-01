@@ -1,5 +1,8 @@
 package be.vinci.ipl.investors;
 
+import be.vinci.ipl.investors.repositories.AuthenticationProxy;
+import be.vinci.ipl.investors.repositories.InvestorsRepository;
+import be.vinci.ipl.investors.repositories.WalletProxy;
 import be.vinci.ipl.investors.exceptions.BadRequestException;
 import be.vinci.ipl.investors.exceptions.NotFoundException;
 import be.vinci.ipl.investors.models.Investor;

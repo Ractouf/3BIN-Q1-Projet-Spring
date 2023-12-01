@@ -1,4 +1,4 @@
-package be.vinci.ipl.investors;
+package be.vinci.ipl.investors.repositories;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Repository;
