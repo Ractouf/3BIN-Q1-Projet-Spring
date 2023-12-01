@@ -21,10 +21,8 @@ public class Order {
   private String ticker;
   private int quantity;
   @Enumerated
-  @JsonFormat(shape = Shape.STRING)
   private OrderSide side;
   @Enumerated
-  @JsonFormat(shape = Shape.STRING)
   private OrderType type;
   private double limit;
   private int filled;

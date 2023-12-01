@@ -15,5 +15,22 @@ Content-Type: application/json
   "limit": 10
 }
 
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
+
+{
+"owner": "Matteo",
+"timestamp": 99999,
+"ticker": "AAPL",
+"quantity": 100,
+"side": "SELL",
+"type": "LIMIT",
+"limit": 5
+}
+
 ### Get one order
 GET http://localhost:9004/order/fc038acb-c212-45c4-83bf-0dd9369aa460
+
+###
+GET http://localhost:9004/order/open/by-ticker-AAPL
