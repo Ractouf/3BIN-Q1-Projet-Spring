@@ -20,15 +20,28 @@ public class ExecutionsService {
         this.walletProxy = walletProxy;
     }
 
+    /**
+     * Update the price of a ticker
+     * @param ticker the ticker
+     * @param price the new price
+     */
     public void updatePrice(String ticker, String price) {
       priceProxy.changePrice(ticker, price);
     }
 
+    /**
+     * Update the orders quantity
+     * @param transaction the transaction
+     */
     public void updateOrders(Transaction transaction) {
       orderProxy.changeFilled(transaction.getBuyOrderGuid(), String.valueOf(transaction.getQuantity()));
       orderProxy.changeFilled(transaction.getSellOrderGuid(), String.valueOf(transaction.getQuantity()));
     }
 
+    /**
+     * Update the cash of the seller and the buyer
+     * @param transaction the transaction
+     */
     public void updateCash(Transaction transaction) {
       double amountCash = transaction.getPrice() * transaction.getQuantity();
       ArrayList<Position> list = new ArrayList<>();
