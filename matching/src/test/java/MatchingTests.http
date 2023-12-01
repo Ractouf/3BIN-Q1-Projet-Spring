@@ -1,0 +1,54 @@
+### find matches of a ticker
+POST http://localhost:9006/trigger/AAPL
+
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
+
+{
+  "owner": "dad",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 500,
+  "side": "BUY",
+  "type": "LIMIT",
+  "limit": 10
+}
+
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
+
+{
+  "owner": "mom",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 2,
+  "side": "SELL",
+  "type": "LIMIT",
+  "limit": 8
+}
+
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
+
+{
+  "owner": "Euuur",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 50,
+  "side": "SELL",
+  "type": "LIMIT",
+  "limit": 4
+}
+
+
+### get price to see if this is updated
+GET http://localhost:9003/price/AAPL
+
+### Get all orders by username
+GET http://localhost:9004/order/by-user/dad
+
+### Get all orders by username
+GET http://localhost:9004/order/by-user/mom
