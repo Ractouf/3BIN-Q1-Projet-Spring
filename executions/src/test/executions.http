@@ -6,8 +6,8 @@ Content-Type: application/json
   "ticker": "AAPL",
   "seller": "picsous",
   "buyer": "cresus",
-  "buy_order_guid": "6B29FC40-CA47-1067-B31D-00DD010662DA",
-  "sell_order_guid": "550e8400-e29b-41d4-a716-446655440000",
+  "buyOrderGuid": "172c014f-67a8-40d9-b2cd-371957dc5d7f",
+  "sellOrderGuid": "bbb7cf11-1ee9-43bc-9b5c-881690af74cc",
   "quantity": 10,
   "price": 100.0
 }

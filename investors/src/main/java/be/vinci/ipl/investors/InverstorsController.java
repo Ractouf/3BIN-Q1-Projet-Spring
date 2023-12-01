@@ -1,5 +1,7 @@
 package be.vinci.ipl.investors;
 
+import be.vinci.ipl.investors.exceptions.BadRequestException;
+import be.vinci.ipl.investors.exceptions.NotFoundException;
 import be.vinci.ipl.investors.models.Investor;
 import be.vinci.ipl.investors.models.InvestorWithPassword;
 import org.springframework.http.HttpStatus;
@@ -46,9 +48,14 @@ public class InverstorsController {
 
     @DeleteMapping("/investors/{username}")
     public ResponseEntity<Investor> deleteOne(@PathVariable String username) {
-        boolean deleted = service.deleteOne(username);
+        try {
+            service.deleteOne(username);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        if (!deleted) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
