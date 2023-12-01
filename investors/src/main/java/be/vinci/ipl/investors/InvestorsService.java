@@ -73,9 +73,8 @@ public class InvestorsService {
             }
 
             authenticationProxy.deleteCredentials(username);
-            repository.deleteByUsername(username);
-        } catch (FeignException e) {
-            throw new NotFoundException();
-        }
+        } catch (FeignException ignored) {}
+
+        repository.deleteByUsername(username);
     }
 }
