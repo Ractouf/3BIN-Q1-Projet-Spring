@@ -36,7 +36,6 @@ public class Transaction {
         return ticker == null || ticker.isBlank() ||
                 seller == null || seller.isBlank() ||
                 buyer == null || buyer.isBlank() ||
-                buyer == null || buyer.isBlank() ||
                 buyOrderGuid == null || buyOrderGuid.isBlank() ||
                 sellOrderGuid == null || sellOrderGuid.isBlank() ||
                 quantity <= 0 || price <= 0;

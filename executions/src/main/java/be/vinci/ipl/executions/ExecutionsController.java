@@ -22,8 +22,7 @@ public class ExecutionsController {
         if (!ticker.equals(transaction.getTicker()) || !seller.equals(transaction.getSeller()) || !buyer.equals(transaction.getBuyer()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        //TODO
-        // mettre a jour cash dans le wallet de buyer et seller
+        service.updateCash(transaction);
         service.updateOrders(transaction);
         service.updatePrice(ticker, String.valueOf(transaction.getPrice()));
 
