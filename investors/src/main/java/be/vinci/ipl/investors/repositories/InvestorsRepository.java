@@ -1,4 +1,4 @@
-package be.vinci.ipl.investors;
+package be.vinci.ipl.investors.repositories;
 
 import be.vinci.ipl.investors.models.Investor;
 import jakarta.transaction.Transactional;

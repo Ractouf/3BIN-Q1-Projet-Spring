@@ -1,4 +1,4 @@
-package be.vinci.ipl.investors;
+package be.vinci.ipl.matching;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,8 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class InvestorsApplication {
+public class MatchingApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(InvestorsApplication.class, args);
+		SpringApplication.run(MatchingApplication.class, args);
 	}
+
 }

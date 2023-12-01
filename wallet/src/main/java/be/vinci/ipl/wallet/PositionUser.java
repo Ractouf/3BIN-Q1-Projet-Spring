@@ -22,7 +22,7 @@ public class PositionUser {
     @Column(nullable = false)
     private String ticker;
     @Column(nullable = false)
-    private int quantity;
+    private double quantity;
     @Column(nullable = false)
     private double unitvalue;
 }

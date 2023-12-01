@@ -3,11 +3,14 @@ POST {{investors}}/investors/test
 Content-Type: application/json
 
 {
-  "username": "test",
-  "firstname": "toast",
-  "lastname": "toast",
   "password": "azerty1.",
-  "birthdate": "2023-01-01"
+  "investorData": {
+    "username": "test",
+    "firstname": "toast",
+    "lastname": "toast",
+    "email": "toast@student.vinci.be",
+    "birthdate": "2023-01-01"
+  }
 }
 
 ### Get one investor
@@ -21,7 +24,7 @@ Content-Type: application/json
   "username": "test",
   "firstname": "toasté",
   "lastname": "toast",
-  "password": "azerty1.",
+  "email": "toast@student.vinci.be",
   "birthdate": "2023-01-01"
 }
 

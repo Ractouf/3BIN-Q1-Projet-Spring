@@ -1,6 +1,5 @@
 package be.vinci.ipl.executions.data;
 
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PatchMapping;
