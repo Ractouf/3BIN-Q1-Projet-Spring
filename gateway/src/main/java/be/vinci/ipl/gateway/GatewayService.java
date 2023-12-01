@@ -12,6 +12,7 @@ import be.vinci.ipl.gateway.exceptions.UnauthorizedException;
 import be.vinci.ipl.gateway.models.Investor;
 import be.vinci.ipl.gateway.models.InvestorWithPassword;
 import be.vinci.ipl.gateway.models.Order;
+import be.vinci.ipl.gateway.models.PositionUser;
 import feign.FeignException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -132,4 +133,24 @@ public class GatewayService {
             else throw e;
         }
     }
+
+    public Iterable<PositionUser> positions(@PathVariable String username) throws NotFoundException {
+        try {
+            return walletsProxy.positions(username);
+        } catch (FeignException e) {
+            if (e.status() == 404) throw new NotFoundException();
+            else throw e;
+        }
+    }
+
+    public String verify(@RequestBody String token) throws UnauthorizedException {
+        try {
+            return authenticationProxy.verify(token);
+        } catch (FeignException e) {
+            if (e.status() == 401) throw new UnauthorizedException();
+            else throw e;
+        }
+    }
+
+
 }

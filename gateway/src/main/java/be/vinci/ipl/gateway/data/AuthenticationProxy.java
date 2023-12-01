@@ -22,4 +22,7 @@ public interface AuthenticationProxy {
 
     @PutMapping("/authentication/{username}")
     void updateOne(@PathVariable String username, @RequestBody UnsafeCredentials credentials);
+
+    @PostMapping("/authentication/verify")
+    String verify(@RequestBody String token);
 }

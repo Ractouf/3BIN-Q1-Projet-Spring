@@ -8,6 +8,7 @@ import be.vinci.ipl.gateway.exceptions.UnauthorizedException;
 import be.vinci.ipl.gateway.models.Investor;
 import be.vinci.ipl.gateway.models.InvestorWithPassword;
 import be.vinci.ipl.gateway.models.Order;
+import be.vinci.ipl.gateway.models.PositionUser;
 import jakarta.ws.rs.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,14 @@ public class GatewayController {
     }
 
     @GetMapping("/investor/{username}")
-    public ResponseEntity<Investor> getOne(@PathVariable String username) {
+    public ResponseEntity<Investor> getOne(@PathVariable String username, @RequestHeader String token) {
+        if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            String rep = service.verify(token);
+            if (rep != username) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         try {
             Investor investor = service.getOne(username);
             return new ResponseEntity<>(investor, HttpStatus.OK);
@@ -107,5 +115,27 @@ public class GatewayController {
         } catch (UnauthorizedException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/wallet/{username}")
+    public ResponseEntity<Iterable<PositionUser>> positions(@PathVariable String username, @RequestHeader String token) {
+        if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            String rep = service.verify(token);
+            if (rep != username) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            return new ResponseEntity<>(service.positions(username), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/wallet/{username}/cash")
+    public ResponseEntity<Iterable<PositionUser>> addPosition(@PathVariable String username, @RequestBody double cash) {
+
     }
 }
