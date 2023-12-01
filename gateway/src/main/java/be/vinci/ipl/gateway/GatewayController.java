@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 public class GatewayController {
 
     private final GatewayService service;
@@ -22,12 +23,12 @@ public class GatewayController {
         this.service = service;
     }
 
-    @GetMapping("/investor/{username}")
-    public ResponseEntity<Investor> getOne(@PathVariable String username, @RequestHeader String token) {
+    @GetMapping("/investors/{username}")
+    public ResponseEntity<Investor> getOne(@PathVariable String username, @RequestHeader("Authorization") String token) {
         if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         try {
             String rep = service.verify(token);
-            if (rep != username) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            if (!rep.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (UnauthorizedException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -39,8 +40,9 @@ public class GatewayController {
         }
     }
 
-    @PostMapping("/investor/{username}")
+    @PostMapping("/investors/{username}")
     public ResponseEntity<Void> createOne(@PathVariable String username, @RequestBody InvestorWithPassword investorWithPassword) {
+        if (!username.equals(investorWithPassword.getInvestor().getUsername())) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             service.createOne(username, investorWithPassword);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -118,11 +120,11 @@ public class GatewayController {
     }
 
     @GetMapping("/wallet/{username}")
-    public ResponseEntity<Iterable<PositionUser>> positions(@PathVariable String username, @RequestHeader String token) {
+    public ResponseEntity<Iterable<PositionUser>> positions(@PathVariable String username, @RequestHeader("Authorization") String token) {
         if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         try {
             String rep = service.verify(token);
-            if (rep != username) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            if (!rep.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (UnauthorizedException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -135,7 +137,50 @@ public class GatewayController {
     }
 
     @PostMapping("/wallet/{username}/cash")
-    public ResponseEntity<Iterable<PositionUser>> addPosition(@PathVariable String username, @RequestBody double cash) {
+    public ResponseEntity<Iterable<PositionUser>> addPosition(@PathVariable String username, @RequestBody String cash, @RequestHeader("Authorization") String token) {
+        if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            String rep = service.verify(token);
+            if (!rep.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            return new ResponseEntity<>(service.addPosition(username, Double.parseDouble(cash)), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    @GetMapping("/wallet/{username}/net-worth")
+    public ResponseEntity<Double> netWorth(@PathVariable String username,@RequestHeader("Authorization") String token) {
+        if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            String rep = service.verify(token);
+            if (!rep.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            return new ResponseEntity<>(service.netWorth(username), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/wallet/{username}/position/{ticker}")
+    public ResponseEntity<Iterable<PositionUser>> addTicker(@PathVariable String username,@PathVariable String ticker, @RequestBody String quantity, @RequestHeader("Authorization") String token) {
+        if (token == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            String rep = service.verify(token);
+            if (!rep.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            return new ResponseEntity<>(service.addTicker(username, ticker, Double.parseDouble(quantity)), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

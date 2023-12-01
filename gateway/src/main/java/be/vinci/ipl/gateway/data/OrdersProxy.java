@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
-@FeignClient(name = "orders")
+@FeignClient(name = "order")
 public interface OrdersProxy {
     @PostMapping("/order")
     Order createOne(@RequestBody Order order);

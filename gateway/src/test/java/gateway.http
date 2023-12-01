@@ -1,0 +1,124 @@
+### Create investor : 201 Ca marche
+POST http://localhost:8080/investors/user
+Content-Type: application/json
+
+{
+  "investor_data": {
+    "username": "user",
+    "email": "user@user.com",
+    "firstname": "user",
+    "lastname": "user",
+    "birthdate": "1990-01-01"
+  },
+  "password": "user"
+}
+
+### Get investor : 200 Ca marche
+GET http://localhost:8080/investors/user
+Authorization: {{token}}
+
+### Get investor : 401
+GET http://localhost:8080/investors/user
+Authorization: "aaaaaaaa"
+
+### Update investor : 200 Ca marche
+PUT http://localhost:8080/investors/user
+Content-Type: application/json
+
+{
+  "username": "user",
+  "email": "userupdated@user.com",
+  "firstname": "user",
+  "lastname": "user",
+  "birthdate": "1990-01-01"
+}
+
+### Delete investor : 200
+DELETE http://localhost:8080/investors/user
+
+### Initiate authentication : 200 Ca marche
+POST http://localhost:8080/authentication/connect
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}
+
+> {% client.global.set("token", response.body) %}
+
+### Update credentials : 200 Ca marche
+PUT http://localhost:8080/authentication/user
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "userupdated"
+}
+
+### Initiate authentication : 200 Ca marche
+POST http://localhost:8080/authentication/connect
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "userupdated"
+}
+
+> {% client.global.set("token", response.body) %}
+
+### Pass an order Ca marche
+POST http://localhost:8080/order
+Content-Type: application/json
+
+{
+  "owner": "user",
+  "timestamp": 457696995,
+  "ticker": "AAPL",
+  "quantity": 10,
+  "side": "BUY",
+  "type": "LIMIT",
+  "limit": 100,
+  "filled": 0
+}
+
+### Get all orders Ca marche
+GET http://localhost:8080/order/by-user/user
+Authorization: {{token}}
+
+### Get wallet Ca marche
+GET http://localhost:8080/wallet/user
+Authorization: {{token}}
+
+### Add cash to wallet
+POST http://localhost:8080/wallet/user/cash
+Authorization: {{token}}
+Content-Type: text/plain
+
+1000.0
+
+### Withdraw cash from wallet
+POST http://localhost:8080/wallet/user/cash
+Authorization: {{token}}
+Content-Type: text/plain
+
+-1000.0
+
+
+### Get net worth
+GET http://localhost:8080/wallet/user/net-worth
+Authorization: {{token}}
+
+### Add stock to wallet
+POST http://localhost:8080/wallet/user/position/AAPL
+Authorization: {{token}}
+Content-Type: text/plain
+
+10.0
+
+### Withdraw stock from wallet
+POST http://localhost:8080/wallet/user/position/AAPL
+Authorization: {{token}}
+Content-Type: text/plain
+
+-10.0

@@ -3,7 +3,15 @@ package be.vinci.ipl.gateway.models;
 
 import be.vinci.ipl.gateway.models.enums.OrderSide;
 import be.vinci.ipl.gateway.models.enums.OrderType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Order {
 
     private String owner;

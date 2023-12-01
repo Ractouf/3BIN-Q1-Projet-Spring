@@ -9,12 +9,16 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class PositionUser {
+public class Position {
 
-    private int id;
-    private String username;
+    public Position(String ticker, double quantity, double unitvalue) {
+        this.ticker = ticker;
+        this.quantity = quantity;
+        this.unitvalue = unitvalue;
+    }
+
     private String ticker;
-    private int quantity;
+    private double quantity;
     private double unitvalue;
 }
 
