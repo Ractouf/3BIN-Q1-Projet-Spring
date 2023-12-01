@@ -6,10 +6,10 @@ POST http://localhost:9004/order
 Content-Type: application/json
 
 {
-  "owner": "Damien",
+  "owner": "dad",
   "timestamp": 99999,
   "ticker": "AAPL",
-  "quantity": 100,
+  "quantity": 500,
   "side": "BUY",
   "type": "LIMIT",
   "limit": 10
@@ -20,17 +20,35 @@ POST http://localhost:9004/order
 Content-Type: application/json
 
 {
-"owner": "Matteo",
-"timestamp": 99999,
-"ticker": "AAPL",
-"quantity": 100,
-"side": "SELL",
-"type": "LIMIT",
-"limit": 5
+  "owner": "mom",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 2,
+  "side": "SELL",
+  "type": "LIMIT",
+  "limit": 8
 }
 
-### Get one order
-GET http://localhost:9004/order/fc038acb-c212-45c4-83bf-0dd9369aa460
+### Create one order
+POST http://localhost:9004/order
+Content-Type: application/json
 
-###
-GET http://localhost:9004/order/open/by-ticker-AAPL
+{
+  "owner": "Euuur",
+  "timestamp": 99999,
+  "ticker": "AAPL",
+  "quantity": 50,
+  "side": "SELL",
+  "type": "LIMIT",
+  "limit": 4
+}
+
+
+### get price to see if this is updated
+GET http://localhost:9003/price/AAPL
+
+### Get all orders by username
+GET http://localhost:9004/order/by-user/dad
+
+### Get all orders by username
+GET http://localhost:9004/order/by-user/mom

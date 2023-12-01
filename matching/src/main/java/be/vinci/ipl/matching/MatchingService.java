@@ -28,6 +28,12 @@ public class MatchingService {
     this.priceProxy = priceProxy;
   }
 
+  /**
+   * create a transaction with orders and the ticker
+   * @param selOrder the order of type SELL
+   * @param buyOrder the order of type BUY
+   * @param ticker the ticker
+   */
   public Transaction createTransaction(Order selOrder, Order buyOrder, String ticker){
     Transaction transaction = new Transaction();
     transaction.setBuyer(buyOrder.getOwner());
@@ -38,6 +44,10 @@ public class MatchingService {
     return transaction;
   }
 
+  /**
+   * find all matches between SELLS and BUY of 1 ticker
+   * @param ticker the ticker
+   */
   public List<Transaction> match(String ticker){
     Iterable<Order> iterableSellOrders = orderProxy.readTicker(ticker, OrderSide.SELL);
     Iterable<Order> iterableBuyOrders = orderProxy.readTicker(ticker, OrderSide.BUY);

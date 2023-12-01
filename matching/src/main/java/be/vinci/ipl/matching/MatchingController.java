@@ -28,7 +28,7 @@ public class MatchingController {
     public ResponseEntity<Void> findMatch(@PathVariable String ticker){
         List<Transaction> transactions = service.match(ticker);
         for (Transaction transaction : transactions) {
-            System.out.println("AAAAAAAAA" + transactions);
+            System.out.println("AAAAAAAAA" + transaction);
             transactionProxy.postOne(transaction.getTicker(), transaction.getSeller(), transaction.getBuyer(), transaction);
         }
         return new ResponseEntity<>(HttpStatus.OK);

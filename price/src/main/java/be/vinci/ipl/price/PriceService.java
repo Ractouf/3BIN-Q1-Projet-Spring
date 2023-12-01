@@ -12,6 +12,10 @@ public class PriceService {
     this.repository = repository;
   }
 
+  /**
+   * Get the market price of one ticker
+   * @param ticker the ticker
+   */
   public double getPrice(String ticker) {
     if (!repository.existsByTicker(ticker)) {
       return 1;
@@ -20,6 +24,11 @@ public class PriceService {
     return tile.getPrice();
   }
 
+  /**
+   * Update the marketprice of a ticker
+   * @param ticker the ticker
+   * @param newPrice the new market price of the ticker
+   */
   public boolean changePrice(String ticker, double newPrice) {
     if(newPrice <= 0) return false;
 
